@@ -1,0 +1,125 @@
+﻿@inherits LayoutComponentBase
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+<PageTitle>Maschinblick</PageTitle>
+
+<style>
+    .MenuButton,
+    .MenuButton:hover {
+        color: whitesmoke;
+        background: rgb(200, 200, 200);
+        background-color: rgb(60, 0, 60);
+        outline-style: hidden;
+        outline: none;
+        width: 100px;
+        height: 30px;
+    }
+</style>
+
+<div class="page @GetCssClass()">
+
+    <div class="sidebar @readClient.gui.NavBarClass">
+
+        <NavMenu />
+
+    </div>
+
+    <main>
+
+        <div class="top-row px-4" style="min-height:50px;">
+
+            <div style="text-align:left">
+                <button ID="MenuStatus" Class="MenuButton" style="align-self:inline-block; min-width:100px; max-width:150px" Padding="5" @onclick="readClient.gui.Toggle"> @readClient.gui.menustatus Menu </button>
+            </div>
+
+            <p2 style="min-width:100px; text-align:right; display:inline-block;">
+                Start Date
+            </p2>
+            <div style="margin-left:8px; display:inline-block;">
+                <input style="min-width:188px" @bind="readClient.timeFormatting.StartDate" />
+            </div>
+            <button Class="MenuButton" Padding="5" style="max-width:25px;" @onclick="readClient.timeFormatting.StartEarlier"> - </button>
+            <button Class="MenuButton" Padding="5" style="max-width:25px;" @onclick="readClient.timeFormatting.StartLater"> + </button>
+
+            <p2 style="min-width:100px; text-align:right; display:inline-block;">
+                End Date
+            </p2>
+            <div style="margin-left:8px; display:inline-block;">
+                <input style="min-width:188px" @bind="readClient.timeFormatting.EndDate" />
+            </div>
+            <button Class="MenuButton" Padding="5" style="max-width:25px;" @onclick="readClient.timeFormatting.EndEarlier"> - </button>
+            <button Class="MenuButton" Padding="5" style="max-width:25px;" @onclick="readClient.timeFormatting.EndLater"> + </button>
+
+            <button ID="SetToNow" Class="MenuButton" style="margin-left: 1%; display:inline-block;max-width:200px; min-width:150px" Padding="5" @onclick="readClient.timeFormatting.SetToNow"> Set to Now. </button>
+
+            <!--<button ID="Refresh" Class="MenuButton" style="margin-left: 2%; display:inline-block;max-width:120px; min-width:120px" Padding="5" @onclick="Refresh"> Refresh </button> -->
+
+            <p1 style="margin-left:5%">Theme</p1>
+            <select @onchange="readClient.gui.ChangingTheme" style="margin-left: 1rem">
+                @foreach (var theme in readClient.gui.themes)
+                {
+                    <option selected="@readClient.gui.IsSelectedTheme(theme)" value="@theme">@theme</option>
+                }
+            </select>
+
+            <p1 style="margin-left:20%; display:inline-block;" Padding="5"> V0.4 </p1>
+
+            <!-- <button @onclick="Save">Create Cookie</button>-->
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+
+    </main>
+
+
+</div>
+
+@code{
+    ReadClient readClient = new();
+
+    private string GetCssClass() // everytime a ui is messed with this function triggers
+    {
+
+        //Console.WriteLine("do a thing");
+
+        if (readClient.gui.selectedTheme == "Normal")
+        {
+            readClient.gui.BarBackground = "#2d2d2d";  // dark background
+            return "dark-mode";
+        }
+        else
+        {
+            readClient.gui.BarBackground = "#f7f7f7"; // light background
+            return String.Empty;
+        }
+    }
+
+    public async Task Save() // save the data to the local client
+    {
+        await LocalStorage.SetItemAsync("StartDate", readClient.timeFormatting.StartDate);
+        await LocalStorage.SetItemAsync("EndDate", readClient.timeFormatting.EndDate);
+        await LocalStorage.SetItemAsync("Theme", readClient.gui.selectedTheme);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) // only triggers once after load
+    {
+        if (firstRender)
+        {
+            try
+            {
+                await readClient.Read_Client(LocalStorage);
+                StateHasChanged();
+            }
+            catch
+            {
+                Console.WriteLine("New Client;");
+            }
+        }
+        else
+        {
+            await Save();
+        }
+	}
+
+}

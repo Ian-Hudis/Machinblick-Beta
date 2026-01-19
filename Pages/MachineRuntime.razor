@@ -1,0 +1,238 @@
+﻿@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Charts
+@using Maschinblick.Data
+
+
+<p1>1st Shift</p1>
+<p1 class="container">
+    @if (Barset.Bar1.barcount>0)
+    {
+
+        <RadzenChart SeriesClick=@OnSeriesClick ColorScheme="ColorScheme.Pastel">
+            <RadzenPieSeries Data="@shift1data" Title="1st Shift Runtime" CategoryProperty="State" ValueProperty="TimeAmount" Fills="@BarData.ColorPallet">
+                <RadzenValueAxis Formatter="@Data.Formatter.FormatAsPercent">
+                    <RadzenGridLines Visible="false" />
+                    <RadzenSeriesDataLabels Visible="true" />
+                </RadzenValueAxis>
+
+                <RadzenSeriesDataLabels Visible="true" />
+            </RadzenPieSeries>
+        </RadzenChart>
+
+        <SfChart Height="100px" Width="100%" Background="@BarBackground" HighlightColor="red">
+            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"> </ChartPrimaryXAxis>
+            <ChartPrimaryYAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTimeCategory" IntervalType="IntervalType.Hours" Interval="2" TickPosition="AxisPosition.Inside">
+            </ChartPrimaryYAxis>
+            <ChartSeriesCollection>
+                @for (int i = 0; i<Barset.Bar1.Details.Length; i++)
+                {
+                    <ChartSeries DataSource="@Barset.Bar1.Details[i]" XName="X" YName="Tvalue" Fill="@Barset.Bar1.Color[i]" Type="ChartSeriesType.StackingBar">
+                        <ChartSeriesAnimation Enable="false"></ChartSeriesAnimation>
+                        <ChartMarker>
+                            <ChartDataLabel Visible="true" Name="Text" Format="center"></ChartDataLabel>
+                        </ChartMarker>
+                    </ChartSeries>
+                }
+            </ChartSeriesCollection>
+        </SfChart>
+    }
+    else
+    {
+        <div style="margin-left: 2rem">
+            No 1st Shift Selected.
+        </div>
+    }
+</p1>
+
+
+<p1>2nd Shift</p1>
+<p1 class="container">
+    @if (Barset.Bar2.barcount>0)
+    {
+        <RadzenChart SeriesClick=@OnSeriesClick ColorScheme="ColorScheme.Pastel">
+            <RadzenPieSeries Data="@shift2data" Title="2nd Shift Runtime" CategoryProperty="State" ValueProperty="TimeAmount" Fills="@BarData.ColorPallet">
+                <RadzenValueAxis Formatter="@Data.Formatter.FormatAsPercent">
+                    <RadzenGridLines Visible="false" />
+                    <RadzenSeriesDataLabels Visible="true" />
+                </RadzenValueAxis>
+                <RadzenSeriesDataLabels Visible="true" />
+            </RadzenPieSeries>
+        </RadzenChart>
+
+        <SfChart Height="100px" Width="100%" Background="@BarBackground" HighlightColor="red">
+            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"> </ChartPrimaryXAxis>
+            <ChartPrimaryYAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTimeCategory" IntervalType="IntervalType.Hours" Interval="2" TickPosition="AxisPosition.Inside">
+            </ChartPrimaryYAxis>
+            <ChartSeriesCollection>
+                @for (int i = 0; i<Barset.Bar2.Details.Length; i++)
+                {
+                    <ChartSeries DataSource="@Barset.Bar2.Details[i]" XName="X" YName="Tvalue" Fill="@Barset.Bar2.Color[i]" Type="ChartSeriesType.StackingBar">
+                        <ChartSeriesAnimation Enable="false"></ChartSeriesAnimation>
+                        <ChartMarker>
+                            <ChartDataLabel Visible="true" Name="Text" Format="center"></ChartDataLabel>
+                        </ChartMarker>
+                    </ChartSeries>
+                }
+            </ChartSeriesCollection>
+        </SfChart>
+    }
+    else
+    {
+        <div style="margin-left: 2rem">
+            No 2nd Shift Selected.
+        </div>
+    }
+</p1>
+
+
+<p1>Overnight</p1>
+<p1 class="container">
+    @if (Barset.BarOV.barcount>0)
+    {
+        <RadzenChart SeriesClick=@OnSeriesClick ColorScheme="ColorScheme.Pastel">
+            <RadzenPieSeries Data="@shiftOVNdata" Title="Overnight Runtime" CategoryProperty="State" ValueProperty="TimeAmount" Fills="@BarData.ColorPallet">
+                <RadzenValueAxis Formatter="@Data.Formatter.FormatAsPercent">
+                    <RadzenGridLines Visible="false" />
+                    <RadzenSeriesDataLabels Visible="true" />
+                </RadzenValueAxis>
+
+                <RadzenSeriesDataLabels Visible="true" />
+            </RadzenPieSeries>
+        </RadzenChart>
+
+        <SfChart Height="100px" Width="100%" Background="@BarBackground" HighlightColor="red">
+            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"> </ChartPrimaryXAxis>
+            <ChartPrimaryYAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTimeCategory" IntervalType="IntervalType.Hours" Interval="2" TickPosition="AxisPosition.Inside">
+            </ChartPrimaryYAxis>
+            <ChartSeriesCollection>
+                @for (int i = 0; i<Barset.BarOV.Details.Length; i++)
+                {
+                    <ChartSeries DataSource="@Barset.BarOV.Details[i]" XName="X" YName="Tvalue" Fill="@Barset.BarOV.Color[i]" Type="ChartSeriesType.StackingBar">
+                        <ChartSeriesAnimation Enable="false"></ChartSeriesAnimation>
+                        <ChartMarker>
+                            <ChartDataLabel Visible="true" Name="Text" Format="center"></ChartDataLabel>
+                        </ChartMarker>
+                    </ChartSeries>
+                }
+            </ChartSeriesCollection>
+        </SfChart>
+    }
+    else
+    {
+        <div style="margin-left: 2rem">
+            No Overnight Shift Selected.
+        </div>
+    }
+</p1>
+
+
+<p1> 3rd Shift (Weekend Shift)</p1>
+<p1 class="container">
+    @if (Barset.Bar3.barcount>0)
+    {
+        <RadzenChart SeriesClick=@OnSeriesClick ColorScheme="ColorScheme.Pastel">
+            <RadzenPieSeries Data="@shift3data" Title="3rd Shift Runtime" CategoryProperty="State" ValueProperty="TimeAmount" Fills="@BarData.ColorPallet">
+                <RadzenValueAxis Formatter="@Data.Formatter.FormatAsPercent">
+                    <RadzenGridLines Visible="false" />
+                    <RadzenSeriesDataLabels Visible="true" />
+                </RadzenValueAxis>
+
+                <RadzenSeriesDataLabels Visible="true" />
+            </RadzenPieSeries>
+        </RadzenChart>
+        <SfChart Height="100px" Width="100%" Background="@BarBackground" HighlightColor="red">
+            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"> </ChartPrimaryXAxis>
+            <ChartPrimaryYAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTimeCategory" IntervalType="IntervalType.Hours" Interval="2" TickPosition="AxisPosition.Inside">
+            </ChartPrimaryYAxis>
+            <ChartSeriesCollection>
+                @for (int i = 0; i<Barset.Bar3.Details.Length; i++)
+                {
+                    <ChartSeries DataSource="@Barset.Bar3.Details[i]" XName="X" YName="Tvalue" Fill="@Barset.Bar3.Color[i]" Type="ChartSeriesType.StackingBar">
+                        <ChartSeriesAnimation Enable="false"></ChartSeriesAnimation>
+                        <ChartMarker>
+                            <ChartDataLabel Visible="true" Name="Text" Format="center"></ChartDataLabel>
+                        </ChartMarker>
+                    </ChartSeries>
+                }
+            </ChartSeriesCollection>
+        </SfChart>
+    }
+    else
+    {
+        <div style="margin-left: 2rem">
+            No 3rd Shift Selected.
+        </div>
+    }
+</p1>
+
+
+<p1> Overnight2 (Weekend Shift)</p1>
+<p1 class="container">
+    @if (Barset.BarOV2.barcount>0)
+    {
+        <RadzenChart SeriesClick=@OnSeriesClick ColorScheme="ColorScheme.Pastel">
+            <RadzenPieSeries Data="@shiftOVN2data" Title="3rd Shift Runtime" CategoryProperty="State" ValueProperty="TimeAmount" Fills="@BarData.ColorPallet">
+                <RadzenValueAxis Formatter="@Data.Formatter.FormatAsPercent">
+                    <RadzenGridLines Visible="false" />
+                    <RadzenSeriesDataLabels Visible="true" />
+                </RadzenValueAxis>
+
+                <RadzenSeriesDataLabels Visible="true" />
+            </RadzenPieSeries>
+        </RadzenChart>
+        <SfChart Height="100px" Width="100%" Background="@BarBackground" HighlightColor="red">
+            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category"> </ChartPrimaryXAxis>
+            <ChartPrimaryYAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTimeCategory" IntervalType="IntervalType.Hours" Interval="2" TickPosition="AxisPosition.Inside">
+            </ChartPrimaryYAxis>
+            <ChartSeriesCollection>
+                @for (int i = 0; i<Barset.BarOV2.Details.Length; i++)
+                {
+                    <ChartSeries DataSource="@Barset.BarOV2.Details[i]" XName="X" YName="Tvalue" Fill="@Barset.BarOV2.Color[i]" Type="ChartSeriesType.StackingBar">
+                        <ChartSeriesAnimation Enable="false"></ChartSeriesAnimation>
+                        <ChartMarker>
+                            <ChartDataLabel Visible="true" Name="Text" Format="center"></ChartDataLabel>
+                        </ChartMarker>
+                    </ChartSeries>
+                }
+            </ChartSeriesCollection>
+        </SfChart>
+    }
+    else
+    {
+        <div style="margin-left: 2rem">
+            No Overnight Selected.
+        </div>
+    }
+</p1>
+
+
+
+@code {
+
+    [Parameter]
+    public string? BarBackground { get; set; }
+
+    [Parameter]
+    public BarData.Barset? Barset { get; set; } = null;
+
+    [Parameter]
+    public RuntimeDataDisplay.DataItem[]? shift1data { get; set; } = null;
+
+    [Parameter]
+    public RuntimeDataDisplay.DataItem[]? shift2data { get; set; } = null;
+
+    [Parameter]
+    public RuntimeDataDisplay.DataItem[]? shift3data { get; set; }= null;
+
+    [Parameter]
+    public RuntimeDataDisplay.DataItem[]? shiftOVNdata { get; set; } = null;
+
+    [Parameter]
+    public RuntimeDataDisplay.DataItem[]? shiftOVN2data { get; set; } = null;
+
+
+    void OnSeriesClick(SeriesClickEventArgs args)
+    {
+        // console.Log(args);
+    }
+}

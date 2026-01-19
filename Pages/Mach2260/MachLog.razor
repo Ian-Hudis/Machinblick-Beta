@@ -1,0 +1,150 @@
+﻿@page "/mach2260Log"
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+@using Maschinblick.Data
+@using static Maschinblick.SQL_Client;
+
+<PageTitle>Machine 2260</PageTitle>                                                             <!--adjust -->
+<h3>Mazak 2260 Nexus</h3>                                                                    <!--adjust -->
+@{
+#pragma warning disable CS8602
+#pragma warning disable CS8974
+}
+
+<p>
+    <p1 style="margin-left: 1rem">Event Filter</p1>
+    <select @onchange="ChangeEventList" style="margin-left: 0.5rem">
+        @foreach (var Event in EventList)
+        {
+            <option selected="@IsSelectedEvent(Event)" value="@Event">@Event</option>
+        }
+    </select>
+    @(tablesize-2) Rows Loaded
+    <button Padding="5" style="marginleft:5rem; max-width:110px;" @onclick="UpdateTable"> Refresh </button>
+</p>
+
+@if (tablesize<3)
+{
+    <p><em>No Events Logged.</em></p>
+}
+else
+{
+    <div style="margin-left:2px; text-align:center; margin-bottom: 20px;">
+        <MachineDataGrid datalogService="datalogService" Datalog_rows="Datalog_rows" Thememode="@readClient.gui.selectedTheme" Overrides="2"> </MachineDataGrid>
+    </div>
+}
+
+@code {
+    //2260
+    private int pagenumber = 2260;
+    private string brand = "Mazak";
+    private string branch = "mach";
+
+    private string selectedEvent = "Raw Data";
+    private List<string> EventList = new List<string> { "Raw Data", "State Data", "Part Data", "H1 Rapid Data", "H1 Feed Data", "H1 Spindle", "H2 Rapid Data", "H2 Feed Data", "H2 Spindle", "Kiosk Data"};
+
+    private bool IsSelectedEvent(string Event)
+    {
+        return Event == selectedEvent;
+    }
+
+    private void ChangeEventList(ChangeEventArgs e)
+    {
+    #pragma warning disable CS8601 // Dereference of a possibly null reference.
+    #pragma warning disable CS8602 // Dereference of a possibly null reference.
+        selectedEvent = e.Value.ToString();
+        //JSRuntime.InvokeVoidAsync("AutoRefresh.refreshData");       // the actual script
+    #pragma warning disable CS8602 // Dereference of a possibly null reference.
+    #pragma warning disable CS8601 // Dereference of a possibly null reference.
+    }
+
+    ReadClient readClient = new();
+
+    Datalog_Service datalogService = new();
+
+    private IEnumerable<Datalog_column>? Datalog_rows;
+
+    private SQL_Client.SQL_Reader[] tablecontent = new SQL_Client.SQL_Reader[1];
+    private SQL_Client.SQL_Reader[] prev_tablecontent = new SQL_Client.SQL_Reader[1];
+
+    private int tablesize = 2; // size of table
+
+    private int prevtablesize = 2;
+
+    private async Task UpdateTable()
+    {
+        Datalog_rows = Enumerable.Empty<Datalog_column>();
+
+        Datalog_rows = await Task.Run(() => datalogService.ProductList(tablecontent)); // insert the data array into the datalog list
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // read the client data
+        try
+        {
+            await readClient.Read_Client(LocalStorage); // read the local data to know what to display
+                                                        // Console.WriteLine(readClient.timeFormatting.StartDate + "  " + readClient.timeFormatting.EndDate);
+        }
+        catch
+        {
+            Console.WriteLine("New Client;");
+        }
+
+        // declare the list
+        //SQL_Client.SQL_Reader[] tablecontent = new SQL_Client.SQL_Reader[1];
+        tablesize = 2;
+
+        // input the choosen data
+        SQL_Client client = new();
+        SQL_Client.ServiceData Data = client.MachineAnalyze(pagenumber, brand, branch, readClient.timeFormatting.StartDate, readClient.timeFormatting.EndDate);
+
+        // filter
+        switch (selectedEvent)
+        {
+            case "Raw Data":
+                tablecontent = Data.GenData;
+                break;
+            case "State Data":
+                tablecontent = Data.StateData;
+                break;
+            case "Part Data":
+                tablecontent = Data.PartData;
+                break;
+            case "H1 Rapid Data":
+                tablecontent = Data.H1Rap;
+                break;
+            case "H1 Feed Data":
+                tablecontent = Data.H1Feed;
+                break;
+            case "H1 Spindle":
+                tablecontent = Data.H1Spind;
+                break;
+            case "H2 Rapid Data":
+                tablecontent = Data.H2Rap;
+                break;
+            case "H2 Feed Data":
+                tablecontent = Data.H2Feed;
+                break;
+            case "H2 Spindle":
+                tablecontent = Data.H2Spind;
+                break;
+            case "Gantry":
+                tablecontent = Data.Gantry;
+                break;
+            case "Kiosk Data":
+                tablecontent = Data.KioskData;
+                break;
+        }
+
+        tablesize = tablecontent.Length; // adjust the table size to the sql list size
+
+        if (tablesize != prevtablesize)
+        {
+            await InvokeAsync(StateHasChanged);
+            await UpdateTable();
+            prevtablesize = tablesize;
+        }
+        await InvokeAsync(StateHasChanged);
+    }
+
+}

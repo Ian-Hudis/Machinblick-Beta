@@ -1,0 +1,132 @@
+﻿@page "/mach2105override"
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+<h3>Mazak 2105 Overrides</h3>
+@using System.Globalization
+@using Maschinblick.Data
+
+
+    <div class="container">
+        @{
+        #pragma warning disable CS8602 // Dereference of a possibly null reference.
+        }
+        @if (ovrides.Rapid.Count > 1)
+        {
+            <RadzenChart>
+                <RadzenLineSeries Interpolation="Interpolation.Step" Data="@ovrides.Rapid" CategoryProperty="Date" Title="Rapid" LineType="LineType.Solid" ValueProperty="Value" Stroke="Orange"/>
+                <RadzenCategoryAxis Padding="10" Formatter="@Formatter.FormatAstime"/>
+                <RadzenValueAxis Step="10" Min="0" Max="100">
+                    <RadzenGridLines Visible="true" LineType="LineType.Dotted"/>
+                </RadzenValueAxis>
+            </RadzenChart>
+        }
+        @if (ovrides.Feed.Count > 1)
+        {
+            <RadzenChart>
+                <RadzenLineSeries Interpolation="Interpolation.Step" Data="@ovrides.Feed" CategoryProperty="Date" Title="Feed" LineType="LineType.Solid" ValueProperty="Value" Stroke="Red" />
+                <RadzenCategoryAxis Padding="10" Formatter="@Formatter.FormatAstime" />
+                <RadzenValueAxis Step="20" Min="0" Max="200">
+                    <RadzenGridLines Visible="true" LineType="LineType.Dotted" />
+                </RadzenValueAxis>
+            </RadzenChart>
+        }
+        @if (ovrides.Spindle.Count > 1)
+        {
+            <RadzenChart>
+                <RadzenLineSeries Interpolation="Interpolation.Step" Data="@ovrides.Spindle" CategoryProperty="Date" Title="Spindle" LineType="LineType.Solid" ValueProperty="Value" Stroke="Pink" />
+                <RadzenCategoryAxis Padding="10" Formatter="@Formatter.FormatAstime" />
+                <RadzenValueAxis Step="10" Min="0" Max="150">
+                    <RadzenGridLines Visible="true" LineType="LineType.Dotted" />
+                </RadzenValueAxis>
+            </RadzenChart>
+        }
+        @if (ovrides.Rapid2.Count > 1)
+        {
+            <RadzenChart>
+                    <RadzenLineSeries Interpolation="Interpolation.Step" Data="@ovrides.Rapid2" CategoryProperty="Date" Title="Rapid 2" LineType="LineType.Solid" ValueProperty="Value" Stroke="Orange"/>
+                    <RadzenCategoryAxis Padding="10" Formatter="@Formatter.FormatAstime"/>
+                    <RadzenValueAxis Step="10" Min="0" Max="100">
+                        <RadzenGridLines Visible="true" LineType="LineType.Dotted"/>
+                    </RadzenValueAxis>
+                </RadzenChart>
+        }
+        @if (ovrides.Feed2.Count > 1)
+        {
+                <RadzenChart>
+                    <RadzenLineSeries Interpolation="Interpolation.Step" Data="@ovrides.Feed2" CategoryProperty="Date" Title="Feed 2" LineType="LineType.Solid" ValueProperty="Value" Stroke="Red" />
+                    <RadzenCategoryAxis Padding="10" Formatter="@Formatter.FormatAstime" />
+                    <RadzenValueAxis Step="20" Min="0" Max="200">
+                        <RadzenGridLines Visible="true" LineType="LineType.Dotted" />
+                    </RadzenValueAxis>
+                </RadzenChart>
+        }
+        @if (ovrides.Spindle2.Count > 1)
+        {
+                <RadzenChart>
+                    <RadzenLineSeries Interpolation="Interpolation.Step" Data="@ovrides.Spindle2" CategoryProperty="Date" Title="Spindle 2" LineType="LineType.Solid" ValueProperty="Value" Stroke="Pink" />
+                    <RadzenCategoryAxis Padding="10" Formatter="@Formatter.FormatAstime" />
+                    <RadzenValueAxis Step="10" Min="0" Max="150">
+                        <RadzenGridLines Visible="true" LineType="LineType.Dotted" />
+                    </RadzenValueAxis>
+                </RadzenChart>
+        }
+        @if (ovrides.Gantry.Count > 1)
+        {
+            <RadzenChart>
+                <RadzenLineSeries Interpolation="Interpolation.Step" Data="@ovrides.Gantry" CategoryProperty="Date" Title="Gantry" LineType="LineType.Solid" ValueProperty="Value" Stroke="Green" />
+                <RadzenCategoryAxis Padding="10" Formatter="@Formatter.FormatAstime" />
+                <RadzenValueAxis Step="10" Min="0" Max="100">
+                    <RadzenGridLines Visible="true" LineType="LineType.Dotted" />
+                </RadzenValueAxis>
+            </RadzenChart>
+        }
+        @{
+            #pragma warning restore CS8602 // Dereference of a possibly null reference.
+        }
+    </div>
+
+  <!--  <p1>Date/Time issue: Please Change the time range.</p1> -->
+
+@code {
+    //2105
+    private int pagenumber = 2105;
+    private string brand = "HAAS_";
+    private string branch = "mach";
+
+    private ReadClient readClient = new();
+    private SQL_Client client = new();
+    private OverRideData overRideData = new();
+    private OverRideData.OverRideMaterial ovrides = new();
+
+    protected override void OnInitialized()
+    {
+        ovrides.Rapid = new(); ovrides.Feed = new(); ovrides.Spindle = new();
+        ovrides.Rapid2 = new(); ovrides.Feed2 = new(); ovrides.Spindle2 = new();
+        ovrides.Gantry = new();
+    }
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+        // read the client data
+        try
+        {
+            await readClient.Read_Client(LocalStorage); // read the local data to know what to display
+                                                        // Console.WriteLine(readClient.timeFormatting.StartDate + "  " + readClient.timeFormatting.EndDate);
+        }
+        catch
+        {
+            Console.WriteLine("New Client;");
+        }
+
+        // input the choosen data
+        SQL_Client.ServiceData Data = client.MachineAnalyze(pagenumber, brand, branch, readClient.timeFormatting.StartDate, readClient.timeFormatting.EndDate);      
+        
+        ovrides = overRideData.MakeLineGraph(ovrides, Data);
+        // change
+        if (firstRender)
+        {
+            StateHasChanged();
+        }
+
+    }
+}

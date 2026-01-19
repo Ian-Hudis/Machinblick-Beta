@@ -1,0 +1,99 @@
+﻿@page "/mach2105runtime"
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Charts
+@using Maschinblick.Data
+
+<PageTitle>Machine 2105</PageTitle>                                                             <!--adjust -->
+<h3>2105: HAAS VF2</h3>                                                                       <!--adjust -->
+
+<MachineRuntime BarBackground="@BarBackground" Barset="Barset" shift1data="shift1data" shift2data="shift2data" shift3data="shift3data" shiftOVNdata="shiftOVNdata" shiftOVN2data="shiftOVN2data"></MachineRuntime>
+
+@code {
+    //2105
+    private int pagenumber = 2105;
+    private string brand = "HAAS_";
+    private string branch = "mach";
+
+    //client data reader
+    ReadClient readClient = new();
+
+    //data reader
+    SQL_Client client = new();
+
+    //bar graph
+    private string BarBackground = "#2d2d2d";
+    private BarData bardata = new();
+    private BarData.Barset Barset = new();
+
+    //pie graph
+    RuntimeDataDisplay.DataItem[]? shift1data; // this object is not part of the runtime diagnoses and is declared seperately
+    RuntimeDataDisplay.DataItem[]? shift2data;
+    RuntimeDataDisplay.DataItem[]? shiftOVNdata;
+    RuntimeDataDisplay.DataItem[]? shift3data;
+    RuntimeDataDisplay.DataItem[]? shiftOVN2data;
+
+    private RuntimeDiagnoses.RuntimeData RuntimeData = new();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+
+        //! read the client data
+            try
+            {
+                await readClient.Read_Client(LocalStorage); // read the local data to know what to display
+                                                            // Console.WriteLine(readClient.timeFormatting.StartDate + "  " + readClient.timeFormatting.EndDate);
+            }
+            catch
+            {
+                Console.WriteLine("New Client;");
+            }
+            // input the choosen data
+            SQL_Client.ServiceData Data = client.MachineAnalyze(pagenumber, brand, branch, readClient.timeFormatting.StartDate, readClient.timeFormatting.EndDate); // get the data from sql
+        //! read the client data
+
+        //! bar charts
+            try
+        {
+            // chart background
+            if (readClient.gui.selectedTheme == "Normal")
+            {
+                BarBackground = "#2d2d2d";  // dark background
+            }
+            else
+            {
+                BarBackground = "#f7f7f7"; // light background
+            }
+
+            Barset = bardata.Barprocess(branch, Data.StateData, readClient.timeFormatting.EndDate, readClient.timeFormatting.StartDate); // bar graph data
+        }
+        catch
+        {
+            Console.WriteLine("Bar Failed");
+        }
+        //! bar charts
+
+        // pie charts  (Runtime)
+            try
+            {
+                RuntimeData = RuntimeDiagnoses.MakePieCharts(Barset);
+
+                shift1data = RuntimeDataDisplay.PieMaker(RuntimeData.Shift1.TimeRunning, RuntimeData.Shift1.TimeManual, RuntimeData.Shift1.TimeIdle, RuntimeData.Shift1.TimeDown); // make 1st shift pie chart
+                shift2data = RuntimeDataDisplay.PieMaker(RuntimeData.Shift2.TimeRunning, RuntimeData.Shift2.TimeManual, RuntimeData.Shift2.TimeIdle, RuntimeData.Shift2.TimeDown); // make 2nd shift pie chart
+                shiftOVNdata = RuntimeDataDisplay.PieMaker(RuntimeData.Overnight.TimeRunning, RuntimeData.Overnight.TimeManual, RuntimeData.Overnight.TimeIdle, RuntimeData.Overnight.TimeDown); // make overnight pie chart
+                shift3data = RuntimeDataDisplay.PieMaker(RuntimeData.Shift3.TimeRunning, RuntimeData.Shift3.TimeManual, RuntimeData.Shift3.TimeIdle, RuntimeData.Shift3.TimeDown); // make 3rd shift pie chart
+                shiftOVN2data = RuntimeDataDisplay.PieMaker(RuntimeData.Overnight2.TimeRunning, RuntimeData.Overnight2.TimeManual, RuntimeData.Overnight2.TimeIdle, RuntimeData.Overnight2.TimeDown); // make overnight 2 pie chart
+            }
+            catch
+            {
+                Console.WriteLine("Failed to make pie charts for " + pagenumber);
+            }
+        // pie charts   (Runtime)
+
+        // change
+        if (firstRender)
+        {
+            StateHasChanged();
+        }
+    }
+}

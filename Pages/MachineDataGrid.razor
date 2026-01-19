@@ -1,0 +1,120 @@
+﻿@using Maschinblick.Data
+
+@inject Datalog_Service productService
+
+    @if (Thememode == "Normal")  
+    {
+        <RadzenDataGrid AllowFiltering="false" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" style="justify-content: right; border: 1px solid #ff2030; background-color: #EAEEEA; margin-top: 5px; height:50rem; width:1600px;"
+                    rowRender="@datalogService.RowRender" CellRender="@datalogService.CellRender" HeaderCellRender="@datalogService.HeaderFooterCellRender" FooterCellRender="@datalogService.HeaderFooterCellRender"
+                    PageSize="120" AllowSorting="false" Data="@Datalog_rows" TItem="Datalog_column" ColumnWidth="200px" AllowColumnResize="false" AllowPaging="true" PagerHorizontalAlign="Radzen.HorizontalAlign.Left">
+            <Columns>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="ID" Title="Log ID" SortOrder="Radzen.SortOrder.Ascending" Width="100px" Frozen="true"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="ServerTime" Title="Server Time" Width="200px" Frozen ="true"> </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Event" Title="Event" Width="100px"> </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Value" Title="Value" Width="80px"> </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="ProdOrder" Title="Production Order" Width="150px"> </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Material" Title="Material" Width="150px"> </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Shift" Title="Shift" Width="80px"> </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Op" Title="Operator" Width="80px"> </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Sup" Title="Supervisor" Width="100px"> </RadzenDataGridColumn>
+
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Actual_Cycletime" Title="Actual Cyletime" Width="120px"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="SAP_Cycletime" Title="SAP Cyletime" Width="120px"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Kiosk_OP" Title="Operation" Width="100px"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Kiosk_ConfirmationNumber" Title="Confirmation" Width="120px"></RadzenDataGridColumn>
+
+                <RadzenDataGridColumn TItem="Datalog_column" Property="SAP_SetupTime" Title="SAP_SetupTime" Width="120px"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="SAP_Machine_Cycletime" Title="SAP_Machine_Cycletime" Width="120px"></RadzenDataGridColumn>
+                <!--<RadzenDataGridColumn TItem="Datalog_column" Property="Wshift" Title="SQLShift" Width="100px"></RadzenDataGridColumn> -->
+
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Kiosk_State" Title="KioskState" Width="100px"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="MTConnectState" Title="MTConnect State" Width="120px"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="MT_PC1" Title="PartCount1" Width="100px"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="MT_PC2" Title="PartCount2" Width="100px"></RadzenDataGridColumn>
+
+                <RadzenDataGridColumn TItem="Datalog_column" Property="SAP_Quanitity" Title="SAP_Quanitity" Width="100px"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="SAP_Base_Quantity" Title="Base Quantity" Width="100px"></RadzenDataGridColumn>
+                @if (Overrides > 0)
+                {
+                    <RadzenDataGridColumn TItem="Datalog_column" Property="MT_H1Rapid" Title="H1Rapid" Width="100px"></RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="Datalog_column" Property="MT_H1Feed" Title="H1Feed" Width="100px"></RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="Datalog_column" Property="MT_H1Spindle" Title="H1spindle" Width="100px"></RadzenDataGridColumn>
+                    if (Overrides > 1)
+                    {
+                        <RadzenDataGridColumn TItem="Datalog_column" Property="MT_H2Rapid" Title="H2Rapid" Width="100px"></RadzenDataGridColumn>
+                        <RadzenDataGridColumn TItem="Datalog_column" Property="MT_H2Feed" Title="H2Feed" Width="100px"></RadzenDataGridColumn>
+                        <RadzenDataGridColumn TItem="Datalog_column" Property="MT_H2Spindle" Title="H2spindle" Width="100px"></RadzenDataGridColumn>
+                        if (Overrides > 2)
+                        {
+                            <RadzenDataGridColumn TItem="Datalog_column" Property="MT_Gantry" Title="Gantry" Width="100px"></RadzenDataGridColumn>
+                        }
+                    }
+                }
+                <RadzenDataGridColumn TItem="Datalog_column" Property="KioskOverride" Title="KioskOverride" Width="100px"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Plant" Title="Plant" Width="80px"> </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="WorkCenter" Title="Work Center" Width="80px"> </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    }
+    else
+    {
+        <RadzenDataGrid AllowFiltering="false" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" style="justify-content: right; border: 1px solid #EfEfEf; background-color: #ffffff; margin-top: 5px; height:50rem; width:1600px"
+                    rowRender="@datalogService.RowRender" HeaderCellRender="@datalogService.HeaderFooterCellRender" FooterCellRender="@datalogService.HeaderFooterCellRender"
+                    PageSize="120" AllowSorting="false" Data="@Datalog_rows" TItem="Datalog_column" ColumnWidth="200px" AllowColumnResize="false" AllowPaging="true" PagerHorizontalAlign="Radzen.HorizontalAlign.Left">
+            <Columns>
+            <RadzenDataGridColumn TItem="Datalog_column" Property="ID" Title="Log ID" SortOrder="Radzen.SortOrder.Ascending" Width="100px" Frozen="true"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="ServerTime" Title="Server Time" Width="200px" Frozen="true"> </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Event" Title="Event" Width="100px"> </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Value" Title="Value" Width="80px"> </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="ProdOrder" Title="Production Order" Width="150px"> </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Material" Title="Material" Width="150px"> </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Shift" Title="Shift" Width="80px"> </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Op" Title="Operator" Width="80px"> </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Sup" Title="Supervisor" Width="100px"> </RadzenDataGridColumn>
+
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Actual_Cycletime" Title="Actual Cyletime" Width="120px"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="SAP_Cycletime" Title="SAP Cyletime" Width="120px"></RadzenDataGridColumn>
+            <!--<RadzenDataGridColumn TItem="Datalog_column" Property="Wshift" Title="SQLShift" Width="100px"></RadzenDataGridColumn> -->
+
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Kiosk_State" Title="KioskState" Width="100px"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="MTConnectState" Title="MTConnect State" Width="120px"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="MT_PC1" Title="PartCount1" Width="100px"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="MT_PC2" Title="PartCount2" Width="100px"></RadzenDataGridColumn>
+
+                <RadzenDataGridColumn TItem="Datalog_column" Property="SAP_Quanitity" Title="SAP_Quanitity" Width="80px"></RadzenDataGridColumn>
+
+            @if (Overrides > 0)
+            {
+                <RadzenDataGridColumn TItem="Datalog_column" Property="MT_H1Rapid" Title="H1Rapid" Width="100px"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="MT_H1Feed" Title="H1Feed" Width="100px"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="MT_H1Spindle" Title="H1spindle" Width="100px"></RadzenDataGridColumn>
+                if (Overrides > 1)
+                {
+                    <RadzenDataGridColumn TItem="Datalog_column" Property="MT_H2Rapid" Title="H2Rapid" Width="100px"></RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="Datalog_column" Property="MT_H2Feed" Title="H2Feed" Width="100px"></RadzenDataGridColumn>  
+                    <RadzenDataGridColumn TItem="Datalog_column" Property="MT_H2Spindle" Title="H2spindle" Width="100px"></RadzenDataGridColumn>
+                    if (Overrides > 2)
+                    {
+                        <RadzenDataGridColumn TItem="Datalog_column" Property="MT_Gantry" Title="Gantry" Width="100px"></RadzenDataGridColumn>
+                    }
+                }
+            }
+                <RadzenDataGridColumn TItem="Datalog_column" Property="KioskOverride" Title="KioskOverride" Width="100px"></RadzenDataGridColumn>
+
+                <RadzenDataGridColumn TItem="Datalog_column" Property="Plant" Title="Plant" Width="80px"> </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Datalog_column" Property="WorkCenter" Title="Work Center" Width="80px"> </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    }
+
+
+@code {
+    [Parameter]
+    public Datalog_Service? datalogService { get; set; } = null;
+    [Parameter]
+    public IEnumerable<Datalog_column>? Datalog_rows { get; set; } = null;
+    [Parameter]
+    public string? Thememode { get; set; }
+    [Parameter]
+    public int Overrides { get; set; } = 0;
+}

@@ -1,0 +1,256 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">Maschinblick by Keb</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="navbar-container">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" Match="NavLinkMatch.All" @onclick="()=>expandMach2102Menu = !expandMach2102Menu">
+                <span class="oi oi-folder" aria-hidden="true"></span> Machine 2102L
+            </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2102" hidden="@expandMach2102Menu">
+                    <span class="oi oi-flag" aria-hidden="true"></span> About
+                </NavLink>
+            <NavLink class="nav-link" style="margin-left: 2em" href="mach2102log" hidden="@expandMach2102Menu">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Data Log
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2102runtime" hidden="@expandMach2102Menu">
+                    <span class="oi oi-bar-chart" aria-hidden="true"></span> Runtime
+                </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" Match="NavLinkMatch.All" @onclick="()=>expandMach2103Menu = !expandMach2103Menu">
+                <span class="oi oi-folder" aria-hidden="true"></span> Machine 2102M
+            </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2103" hidden="@expandMach2103Menu">
+                    <span class="oi oi-flag" aria-hidden="true"></span> About
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2103log" hidden="@expandMach2103Menu">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Data Log
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2103runtime" hidden="@expandMach2103Menu">
+                    <span class="oi oi-bar-chart" aria-hidden="true"></span> Runtime
+                </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" Match="NavLinkMatch.All" @onclick="()=>expandMach2105Menu = !expandMach2105Menu">
+                <span class="oi oi-folder" aria-hidden="true"></span> Machine 2105
+            </NavLink>
+
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2105" hidden="@expandMach2105Menu">
+                    <span class="oi oi-flag" aria-hidden="true"></span> About
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2105log" hidden="@expandMach2105Menu">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Data Log
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2105runtime" hidden="@expandMach2105Menu">
+                    <span class="oi oi-bar-chart" aria-hidden="true"></span> Runtime
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2105override" hidden="@expandMach2105Menu">
+                    <span class="oi oi-graph" aria-hidden="true"></span> Overrides
+                </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" Match="NavLinkMatch.All" @onclick="()=>expandMach2107Menu = !expandMach2107Menu">
+                <span class="oi oi-folder" aria-hidden="true"></span> Machine 2107
+            </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2107" hidden="@expandMach2107Menu">
+                    <span class="oi oi-flag" aria-hidden="true"></span> About
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2107log" hidden="@expandMach2107Menu">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Data Log
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2107runtime" hidden="@expandMach2107Menu">
+                    <span class="oi oi-bar-chart" aria-hidden="true"></span> Runtime
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2107override" hidden="@expandMach2107Menu">
+                    <span class="oi oi-graph" aria-hidden="true"></span> Overrides
+                </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" Match="NavLinkMatch.All" @onclick="()=>expandMach2111Menu = !expandMach2111Menu">
+                <span class="oi oi-folder" aria-hidden="true"></span> Machine 2111
+            </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2111" hidden="@expandMach2111Menu">
+                    <span class="oi oi-flag" aria-hidden="true"></span> About
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2111log" hidden="@expandMach2111Menu">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Data Log
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2111runtime" hidden="@expandMach2111Menu">
+                    <span class="oi oi-bar-chart" aria-hidden="true"></span> Runtime
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2111override" hidden="@expandMach2111Menu">
+                    <span class="oi oi-graph" aria-hidden="true"></span> Overrides
+                </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" Match="NavLinkMatch.All" @onclick="()=>expandMach2112Menu = !expandMach2112Menu">
+                <span class="oi oi-folder" aria-hidden="true"></span> Machine 2112
+            </NavLink>
+            <NavLink class="nav-link" style="margin-left: 2em" href="mach2112" hidden="@expandMach2112Menu">
+                <span class="oi oi-flag" aria-hidden="true"></span> About
+            </NavLink>
+            <NavLink class="nav-link" style="margin-left: 2em" href="mach2112log" hidden="@expandMach2112Menu">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Data Log
+            </NavLink>
+            <NavLink class="nav-link" style="margin-left: 2em" href="mach2112runtime" hidden="@expandMach2112Menu">
+                <span class="oi oi-bar-chart" aria-hidden="true"></span> Runtime
+            </NavLink>
+            <NavLink class="nav-link" style="margin-left: 2em" href="mach2112override" hidden="@expandMach2112Menu">
+                <span class="oi oi-graph" aria-hidden="true"></span> Overrides
+            </NavLink>
+        </div>
+
+         <div class="nav-item px-3">
+            <NavLink class="nav-link" Match="NavLinkMatch.All" @onclick="()=>expandMach2260Menu = !expandMach2260Menu">
+                <span class="oi oi-folder" aria-hidden="true"></span> Machine 2260
+            </NavLink>
+            <NavLink class="nav-link" style="margin-left: 2em" href="mach2260" hidden="@expandMach2260Menu">
+                    <span class="oi oi-flag" aria-hidden="true"></span> About
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2260log" hidden="@expandMach2260Menu">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Data Log
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2260runtime" hidden="@expandMach2260Menu">
+                    <span class="oi oi-bar-chart" aria-hidden="true"></span> Runtime
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2260override" hidden="@expandMach2260Menu">
+                    <span class="oi oi-graph" aria-hidden="true"></span> Overrides
+                </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" Match="NavLinkMatch.All" @onclick="()=>expandMach2271Menu = !expandMach2271Menu">
+                <span class="oi oi-folder" aria-hidden="true"></span> Machine 2271
+            </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2271" hidden="@expandMach2271Menu">
+                    <span class="oi oi-flag" aria-hidden="true"></span> About
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2271log" hidden="@expandMach2271Menu">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Data Log
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2271runtime" hidden="@expandMach2271Menu">
+                    <span class="oi oi-bar-chart" aria-hidden="true"></span> Runtime
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2271override" hidden="@expandMach2271Menu">
+                    <span class="oi oi-graph" aria-hidden="true"></span> Overrides
+                </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" Match="NavLinkMatch.All" @onclick="()=>expandMach2280Menu = !expandMach2280Menu">
+                <span class="oi oi-folder" aria-hidden="true"></span> Machine 2280
+            </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2280" hidden="@expandMach2280Menu">
+                <span class="oi oi-flag" aria-hidden="true"></span> About
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2280log" hidden="@expandMach2280Menu">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Data Log
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2280runtime" hidden="@expandMach2280Menu">
+                    <span class="oi oi-bar-chart" aria-hidden="true"></span> Runtime
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2280override" hidden="@expandMach2280Menu">
+                    <span class="oi oi-graph" aria-hidden="true"></span> Overrides
+                </NavLink>
+        </div>
+
+        <div class="nav-item px-3"> 
+            <NavLink class="nav-link" Match="NavLinkMatch.All" @onclick="()=>expandMach2281Menu = !expandMach2281Menu">
+                <span class="oi oi-folder" aria-hidden="true"></span> Machine 2281
+            </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2281" hidden="@expandMach2281Menu">
+                    <span class="oi oi-flag" aria-hidden="true"></span> About
+                </NavLink>
+                <NavLink class="nav-link" style = "margin-left: 2em" href="mach2281log" hidden="@expandMach2281Menu"> 
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Data Log
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2281runtime" hidden="@expandMach2281Menu">
+                    <span class="oi oi-bar-chart" aria-hidden="true"></span> Runtime
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2281override" hidden="@expandMach2281Menu">
+                    <span class="oi oi-graph" aria-hidden="true"></span> Overrides
+                </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" Match="NavLinkMatch.All" @onclick="()=>expandMach2282Menu = !expandMach2282Menu">
+                <span class="oi oi-folder" aria-hidden="true"></span> Machine 2282
+            </NavLink>
+            <NavLink class="nav-link" style="margin-left: 2em" href="mach2282" hidden="@expandMach2282Menu">
+                    <span class="oi oi-flag" aria-hidden="true"></span> About
+            </NavLink>
+            <NavLink class="nav-link" style="margin-left: 2em" href="mach2282log" hidden="@expandMach2282Menu">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Data Log
+            </NavLink>
+            <NavLink class="nav-link" style="margin-left: 2em" href="mach2282runtime" hidden="@expandMach2282Menu">
+                    <span class="oi oi-bar-chart" aria-hidden="true"></span> Runtime
+            </NavLink>
+            <NavLink class="nav-link" style="margin-left: 2em" href="mach2282override" hidden="@expandMach2282Menu">
+                    <span class="oi oi-graph" aria-hidden="true"></span> Overrides
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" Match="NavLinkMatch.All" @onclick="()=>expandMach2283Menu = !expandMach2283Menu">
+                <span class="oi oi-folder" aria-hidden="true"></span> Machine 2283
+            </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2283" hidden="@expandMach2283Menu">
+                    <span class="oi oi-flag" aria-hidden="true"></span> About
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em"  href="mach2283log" hidden="@expandMach2283Menu">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Data Log
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2283runtime" hidden="@expandMach2283Menu">
+                    <span class="oi oi-bar-chart" aria-hidden="true"></span> Runtime
+                </NavLink>
+                <NavLink class="nav-link" style="margin-left: 2em" href="mach2283override" hidden="@expandMach2283Menu">
+                    <span class="oi oi-graph" aria-hidden="true"></span> Overrides
+                </NavLink>
+        </div>
+
+
+    </nav>
+</div>
+
+@code {
+
+    private bool expandMach2283Menu = true;
+    private bool expandMach2282Menu = true;
+    private bool expandMach2281Menu = true;
+    private bool expandMach2280Menu = true;
+    private bool expandMach2271Menu = true;
+    private bool expandMach2260Menu = true;
+    private bool expandMach2112Menu = true;
+    private bool expandMach2111Menu = true;
+    private bool expandMach2107Menu = true;
+    private bool expandMach2105Menu = true;
+    private bool expandMach2103Menu = true;
+    private bool expandMach2102Menu = true;
+
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
