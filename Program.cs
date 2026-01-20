@@ -1,4 +1,4 @@
-using Blazored.LocalStorage;
+//using Blazored.LocalStorage;
 using Maschinblick.Shared;
 using Maschinblick.Data;
 using Microsoft.AspNetCore.Components;
@@ -16,15 +16,9 @@ namespace Maschinblick
         static void Main(string[] args)
         {
 
-            //Register Syncfusion community license
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mgo+DSMBaFt/QHRqVVhkVFpFdEBBXHxAd1p/VWJYdVt5flBPcDwsT3RfQF5jS39Qd0ZmXX9ec3ddTg==;Mgo+DSMBPh8sVXJ0S0J+XE9AflRDX3xKf0x/" +
-                "TGpQb19xflBPallYVBYiSV9jS31TdERgWHxbdHRVRWVeWQ==;ORg4AjUWIQA/Gnt2VVhkQlFacldJXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxQdkdiWn5ddXBVRmNaV0w=;MTEyMTk1NUAzMjMwMmUzNDJlMzBsWU0yait4dHhiNVZaN" +
-                "ktLRTYxaEI1eU5vVFFJRXgwZktFWDFpbndab0ZNPQ==;MTEyMTk1NkAzMjMwMmUzNDJlMzBNbTdXY2RBYmZQZlBEZFVPbTNFalA2VG5MTzUydUdKc3NQVTM4TXlFK3ZrPQ==;NRAiBiAaIQQuGjN/V0Z+WE9EaFtKVmJLYVB3WmpQdldgdVRM" +
-                "ZVVbQX9PIiBoS35RdUVhWHxfc3FRRmBYVU1+;MTEyMTk1OEAzMjMwMmUzNDJlMzBlWXZhRjN4Y2orREJNdDZXOVlDa2dVQzU0WGRoYmtreTVuWUNib0w4VmNRPQ==;MTEyMTk1OUAzMjMwMmUzNDJlMzBnMWx6Qld6Wnl4Z1BjQ2ZnL25icnNl" +
-                "N0s4S0k0USs4UDFZZXRUZzRRWGVvPQ==;Mgo+DSMBMAY9C3t2VVhkQlFacldJXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxQdkdiWn5ddXBVRmVeUUw=;MTEyMTk2MUAzMjMwMmUzNDJlMzBnbXNJeUVuZEdqL200RXlHQzhqWVBjb2JKRW0wUD" +
-                "MzVU5VNTRJT2IxZ2dNPQ==;MTEyMTk2MkAzMjMwMmUzNDJlMzBwRG1ncmxnL1JVSWNxbzczSlhDaW12U3E5VG1rWnc4aDNQVHVLNWx2WkNvPQ==;MTEyMTk2M0AzMjMwMmUzNDJlMzBlWXZhRjN4Y2orREJNdDZXOVlDa2dVQzU0WGRoYmtreTVuWUN" +
-                "ib0w4VmNRPQ==");
+            // insert  license here<>
 
+            
 
             var builder = WebApplication.CreateBuilder(args);
 
@@ -112,5 +106,6 @@ namespace Maschinblick
         }
 
     }
+
 
 }
